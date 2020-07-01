@@ -11,9 +11,6 @@
                 <div class="card-body">
 
                     <?php
-                    // $infos = App\User::all();
-                    //$infos = App\User::where('id', auth()->user()->id)->get();
-
                     foreach ($info as $user) {
                         ?>
                         <ul style="list-style-type: none">
