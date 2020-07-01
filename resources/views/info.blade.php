@@ -10,16 +10,21 @@
                 <div class="card-header"><b>Informações Pessoais</b></div>
                 <div class="card-body">
 
-                    @foreach ($info as $user)
-                    <ul style="list-style-type: none">
-                        <li>Nome: {{ $user -> name}}</li>
-                        <li>Apelido: {{ $user -> surname}}</li>
-                        <li>Email: {{ $user -> email}} </li>
+                    <?php
+                    // $infos = App\User::all();
+                    //$infos = App\User::where('id', auth()->user()->id)->get();
 
-                    </ul>
+                    foreach ($info as $user) {
+                        ?>
+                        <ul style="list-style-type: none">
+                            <li>Nome: <?php echo $user->name ?> </li>
+                            <li>Apelido: <?php echo $user->surname ?> </li>
+                            <li>Email: <?php echo $user->email ?> </li>
 
+                        </ul>
+                    <?php } ?>
                     </tr>
-                    @endforeach
+
                     </tbody>
                     </table>
                     <a class="btn btn-primary" href="{{ url('change-password') }}">{{ __('Alterar Palavra-Passe') }}</a>
