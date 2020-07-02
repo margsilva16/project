@@ -18,7 +18,7 @@
 
 
 
-                    <form method="POST" action="publications">
+                    <form method="POST" action="publicar">
                         @csrf                       
 
                         <textarea class="form-control" id="message" required name="message" rows="4" cols="50" style="resize: none"> </textarea>
@@ -29,15 +29,59 @@
                                     {{ __('Publicar') }}
                                 </button>
                                 </form>
-
-                                <a class="btn btn-primary" href="{{ url('list') }}">{{ __('Posts') }}</a>
                             </div>
                         </div>
 
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Mensagem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php ($c = 0)
+                                @foreach ($publications as $publication)
+                                @php ($c++)
+                                <tr> 
+                                    <td><div id="D<?php echo $c; ?>R"> {{ $publication -> message}}</div></td> 
+                                    <td><input type="button" class="btn btn-default" id="D<?php echo $c; ?>" value="Down" class="move down"  onClick="MoveDown('D<?php echo $c; ?>', 'D<?php echo $c + 1; ?>');"/></td>
+                                    <td><input type="button" class="btn btn-default" id="U<?php echo $c; ?>" value="Up" class="move up"  onClick="MoveUp('D<?php echo $c; ?>', 'D<?php echo $c - 1; ?>');"/></td>
+                            <form method="post" action="/home/{{ $publication -> id}}">
+                                {{method_field('DELETE')}}
+                                @csrf
+                                <td><button type='submit' class="btn btn-default" >Eliminar</button></td>
+                            </form>    
+                            </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
+    <script type="text/javascript">
+        function MoveDown(roww, rowwN)
+        {
+            divv = document.getElementById(roww + 'R').innerHTML;
+            if (roww)
+            {
+                ch = document.getElementById(rowwN + 'R').innerHTML;
+                document.getElementById(rowwN + 'R').innerHTML = document.getElementById(roww + 'R').innerHTML;
+                document.getElementById(roww + 'R').innerHTML = ch;
+            }
+        }
+        function MoveUp(roww, rowwN)
+        {
+            divv = document.getElementById(roww + 'R').innerHTML;
+            if (roww)
+            {
+                ch = document.getElementById(rowwN + 'R').innerHTML;
+                document.getElementById(rowwN + 'R').innerHTML = document.getElementById(roww + 'R').innerHTML;
+                document.getElementById(roww + 'R').innerHTML = ch;
+            }
+        }
+    </script>
+
     @endsection
 
 
