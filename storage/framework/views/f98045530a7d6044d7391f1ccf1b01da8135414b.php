@@ -1,7 +1,7 @@
 
-@extends('layouts.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -16,23 +16,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php ($c = 0)
-                            @foreach ($publications as $publication)
-                            @php ($c++)
+                            <?php ($c = 0); ?>
+                            <?php $__currentLoopData = $publications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $publication): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php ($c++); ?>
                             <tr> 
-                                <td><div id="D<?php echo $c; ?>R"> {{ $publication -> message}}</div></td> 
+                                <td><div id="D<?php echo $c; ?>R"> <?php echo e($publication -> message); ?></div></td> 
                                 <td><input type="button" class="btn btn-default" id="D<?php echo $c; ?>" value="Down" class="move down"  onClick="MoveDown('D<?php echo $c; ?>', 'D<?php echo $c + 1; ?>');"/></td>
                                 <td><input type="button" class="btn btn-default" id="U<?php echo $c; ?>" value="Up" class="move up"  onClick="MoveUp('D<?php echo $c; ?>', 'D<?php echo $c - 1; ?>');"/></td>
-                        <form method="post" action="/list/{{ $publication -> id}}">
-                            {{method_field('DELETE')}}
-                            @csrf
+                        <form method="post" action="/list/<?php echo e($publication -> id); ?>">
+                            <?php echo e(method_field('DELETE')); ?>
+
+                            <?php echo csrf_field(); ?>
                             <td><button type='submit' class="btn btn-default" >Eliminar</button></td>
                         </form>    
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
-                    <a class="btn btn-primary" href="{{ route('home') }}">{{ __('Página Inicial') }}</a>
+                    <a class="btn btn-primary" href="<?php echo e(route('home')); ?>"><?php echo e(__('Página Inicial')); ?></a>
                     <script type="text/javascript">
                         function MoveDown(roww, rowwN)
                         {
@@ -62,6 +63,8 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Margarida\Desktop\exercicio\project\resources\views/list.blade.php ENDPATH**/ ?>

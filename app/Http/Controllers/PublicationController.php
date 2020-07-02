@@ -4,17 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Publication;
 
-class publicacoesController extends Controller {
+class PublicationController extends Controller {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index() {
-        $var = auth()->user()->id;
-        $publications = DB::select('select * from publication where user_id = :user_id', ['user_id' => $var]);
+//        $var = auth()->user()->id;
+//        $publications = DB::select('select * from publication where user_id = :user_id', ['user_id' => $var]);
+//        return view('list', ['publications' => $publications]);
+//        $publications = publication::all();
+//        return view('list', ['publications' => $publications]);
+//
+//        $user = User::where('id', auth()->user()->id)->get();
+
+        $id = auth()->user()->id;
+        $publications = Publication::where('user_id', $id)->get();
         return view('list', ['publications' => $publications]);
     }
 
@@ -24,7 +28,7 @@ class publicacoesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+//
     }
 
     /**
@@ -33,14 +37,14 @@ class publicacoesController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $dados) {
-        $teste = auth()->user()->id;
+    public function store(Request $request) {
+        $id = auth()->user()->id;
 
-        $message = $dados->message;
-        DB::insert('insert into publication (message, user_id) values (?, ?)', [$message, $teste]);
-//        $publications = DB::select('select * from publication');
-//        return view('pub.list', ['publications' => $publications]);
-        return redirect()->action('publicacoesController@index');
+        $publicacao = new Publication;
+        $publicacao->message = $request->message;
+        $publicacao->user_id = $id;
+        $publicacao->save();
+        return redirect()->action('HomeController@index');
     }
 
     /**
@@ -50,7 +54,7 @@ class publicacoesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        //
+//
     }
 
     /**
@@ -60,7 +64,7 @@ class publicacoesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        //
+//
     }
 
     /**
@@ -71,7 +75,7 @@ class publicacoesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+//
     }
 
     /**
@@ -81,8 +85,9 @@ class publicacoesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $deleted = DB::delete('delete from publication where id = :id', ['id' => $id]);
-        return redirect()->action('publicacoesController@index');
+        $publicacao = Publication::find($id);
+        $publicacao->delete();
+        return redirect()->action('HomeController@index');
     }
 
 }
