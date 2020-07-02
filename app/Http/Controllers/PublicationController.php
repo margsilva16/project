@@ -6,17 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Publication;
 
-class PublicationController extends Controller {
+class PublicationController extends Controller
+{
 
-    public function index() {
-//        $var = auth()->user()->id;
-//        $publications = DB::select('select * from publication where user_id = :user_id', ['user_id' => $var]);
-//        return view('list', ['publications' => $publications]);
-//        $publications = publication::all();
-//        return view('list', ['publications' => $publications]);
-//
-//        $user = User::where('id', auth()->user()->id)->get();
-
+    public function index()
+    {
         $id = auth()->user()->id;
         $publications = Publication::where('user_id', $id)->get();
         return view('list', ['publications' => $publications]);
@@ -27,8 +21,9 @@ class PublicationController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
-//
+    public function create()
+    {
+        //
     }
 
     /**
@@ -37,7 +32,8 @@ class PublicationController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $id = auth()->user()->id;
 
         $publicacao = new Publication;
@@ -53,8 +49,9 @@ class PublicationController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
-//
+    public function show($id)
+    {
+        //
     }
 
     /**
@@ -63,8 +60,9 @@ class PublicationController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
-//
+    public function edit($id)
+    {
+        //
     }
 
     /**
@@ -74,8 +72,9 @@ class PublicationController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
-//
+    public function update(Request $request, $id)
+    {
+        //
     }
 
     /**
@@ -84,10 +83,10 @@ class PublicationController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $publicacao = Publication::find($id);
         $publicacao->delete();
         return redirect()->action('HomeController@index');
     }
-
 }
